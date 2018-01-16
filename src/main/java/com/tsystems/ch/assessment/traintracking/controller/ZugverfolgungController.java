@@ -11,6 +11,7 @@ public class ZugverfolgungController {
 
     @GetMapping(path = "/trackinginfo")
     public TrackingInfo getTrackingInfo() {
+        // TODO: Fill proper TrackingInfo
         return new TrackingInfo(LocalDateTime.now(), 0);
     }
 }

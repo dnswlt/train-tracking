@@ -6,6 +6,7 @@ public class TrackingInfo {
 
     private LocalDateTime created;
     private int numberOfTrains;
+    // TODO: Add info for each train
 
     public TrackingInfo(LocalDateTime created, int numberOfTrains) {
         this.created = created;

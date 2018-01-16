@@ -1,5 +1,6 @@
-package com.tsystems.ch.assessment.messageadapter;
+package com.tsystems.ch.assessment.meldunggenerator.service;
 
+import com.tsystems.ch.assessment.shared.model.BelegungMeldung;
 import com.tsystems.ch.assessment.shared.service.MeldungQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +16,14 @@ public class MeldungGenerator {
     private int iterationCount;
 
     @Autowired
+    private Network network;
+
+    @Autowired
     private MeldungQueue queue;
 
     @Scheduled(fixedRate = 1000L)
     public void moveTrains() {
-        LOG.debug("Round {}", ++iterationCount);
-
+        LOG.info("Round {}", ++iterationCount);
+        queue.send(new BelegungMeldung("test", false));
     }
 }
