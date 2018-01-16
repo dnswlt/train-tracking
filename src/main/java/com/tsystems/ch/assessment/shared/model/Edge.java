@@ -1,4 +1,4 @@
-package com.tsystems.ch.assessment.meldunggenerator.model;
+package com.tsystems.ch.assessment.shared.model;
 
 public class Edge {
     private int from;
@@ -10,7 +10,11 @@ public class Edge {
         this.from = from;
         this.to = to;
         this.length = length;
-        this.id = String.format("%d->%d", from, to);
+        this.id = id(from, to);
+    }
+
+    public static String id(int from, int to) {
+        return String.format("%d->%d", from, to);
     }
 
     public int getFrom() {
@@ -50,5 +54,10 @@ public class Edge {
         result = 31 * result + id.hashCode();
         result = 31 * result + length;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return id + "/" + length;
     }
 }

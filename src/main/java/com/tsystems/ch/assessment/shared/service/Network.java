@@ -1,6 +1,6 @@
-package com.tsystems.ch.assessment.meldunggenerator.service;
+package com.tsystems.ch.assessment.shared.service;
 
-import com.tsystems.ch.assessment.meldunggenerator.model.Edge;
+import com.tsystems.ch.assessment.shared.model.Edge;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 @Service
 public class Network {
 
+    private Map<String, Edge> edges = new HashMap<>();
     private Map<Integer, List<Edge>> graph = new HashMap<>();
 
     @PostConstruct
@@ -37,15 +38,26 @@ public class Network {
         addEdge(e(19, 1, 10));
     }
 
+    public Edge getEdge(int from, int to) {
+        return edges.get(Edge.id(from, to));
+    }
+
     public Set<Edge> getEdges() {
         return graph.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
     }
 
     private void addEdge(Edge edge) {
         graph.computeIfAbsent(edge.getFrom(), (id) -> new ArrayList<>()).add(edge);
+        edges.put(edge.getId(), edge);
     }
 
     private Edge e(int from, int to, int length) {
         return new Edge(from, to, length);
+    }
+
+    public Edge getRandomSuccessor(Edge edge) {
+        List<Edge> successors = graph.get(edge.getTo());
+        int i = new Random().nextInt(successors.size());
+        return successors.get(i);
     }
 }
